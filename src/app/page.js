@@ -7,20 +7,21 @@ import { GiForkKnifeSpoon } from "react-icons/gi";
 export default function Home() {
   const [barcode, setBarcode] = useState("");
   const [alertData, setAlertData] = useState(null);
-
+  
   const handleKeyPress = async (e) => {
     if (e.key === "Enter" && barcode.trim() !== "") {
-      const apiUrl = `http://localhost:3000/api/attendance/${barcode}`;
+      const base_api_url = process.env.NEXT_PUBLIC_API_URL
+      console.log(base_api_url);
+      const apiUrl = `${base_api_url}/api/attendance/${barcode}`;
 
       try {
         const response = await fetch(apiUrl);
         const { message, id } = await response.json();
         setAlertData({ status: response.status, message, id });
-        // console.log(id);
       } catch (error) {
         setAlertData({
           status: 500,
-          message: "มีบางอย่างผิดพลาด โปรดลองใหม่ภายหลัง",
+          message: "มีบางอย่างผิดพลาด ลองใหม่ภายหลัง",
         });
       } finally {
         setBarcode(""); // Clear input
