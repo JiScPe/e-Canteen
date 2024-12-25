@@ -22,7 +22,7 @@ export async function GET(req, { params }) {
     const data = await query(sql);
     //Check Attendance
     if (data.length < 1) {
-      return Response.json({ message: "ไม่พบพนักงาน / ไม่มีข้อมูลสแกนใบหน้า !" }, { status: 404 });
+      return Response.json({ message: "ไม่พบพนักงาน / ไม่มีข้อมูลสแกนใบหน้า !", status: 404 }, { status: 200 });
     }
 
     // Check Coupon usage
@@ -33,16 +33,16 @@ export async function GET(req, { params }) {
       console.log(`Update Result:`, updateRes)
       if (!updateRes || !updateRes.length) {
         return Response.json(
-          { message: "อัพเดทไม่สำเร็จ !", id: data[0].person_id }, { status: 404 },
+          { message: "อัพเดทไม่สำเร็จ !", id: data[0].person_id, status: 404 }, { status: 200 },
         );
       } else {
         return Response.json(
-          { message: "ใช้คูปองสำเร็จ ☻", id: data[0].person_id }, { status: 200 },
+          { message: "ใช้คูปองสำเร็จ ☻", id: data[0].person_id, status: 200 }, { status: 200 },
         );
       }
     } else {
       return Response.json(
-        { message: "คูปองใช้ไปแล้ว !", id: data[0].person_id }, { status: 403 },
+        { message: "คูปองใช้ไปแล้ว !", id: data[0].person_id, status: 403 }, { status: 200 },
       );
     }
   } catch (error) {

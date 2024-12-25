@@ -16,8 +16,10 @@ export default function Home() {
 
       try {
         const response = await fetch(apiUrl);
-        const { message, id } = await response.json();
-        setAlertData({ status: response.status, message, id });
+        const { message, id, status } = await response.json();
+
+        console.log(message, id, status)
+        setAlertData({ status: status, message, id });
       } catch (error) {
         setAlertData({
           status: 500,
